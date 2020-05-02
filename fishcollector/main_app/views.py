@@ -18,7 +18,7 @@ fishes = [
 ]
 
 def home(request):
-    return HttpResponse('<h1>Fish Collector Home Page</h1>')
+    return render(request, 'home.html')
 
 def about(request):
     return render(request, 'about.html')
