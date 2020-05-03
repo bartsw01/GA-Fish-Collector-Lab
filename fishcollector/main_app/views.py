@@ -1,22 +1,8 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Fish
 
-# Create your views here.
-from django.http import HttpResponse
 
-# Add the Cat class & list and view function below the imports
-# class Fish:  # Note that parens are optional if not inheriting from another class
-#   def __init__(self, name, size, description, age):
-#     self.name = name
-#     self.size = size
-#     self.description = description
-#     self.age = age
-
-# fishes = [
-#   Fish('Tilapia', '2 lbs', 'freshwater food fish', 3),
-#   Fish('Blue Gill', '3-4 lbs', 'deep blue purple on face', 2),
-#   Fish('Trout', '10 lbs', 'spotted rainbow trout', 4)
-# ]
 
 def home(request):
   return render(request, 'home.html')
@@ -31,3 +17,16 @@ def fishes_index(request):
 def fishes_detail(request, fish_id):
   fish = Fish.objects.get(id=fish_id)
   return render(request, 'fishes/detail.html', { 'fish': fish})   
+
+class FishCreate(CreateView):
+  model = Fish
+  fields = '__all__'  
+  success_url = '/fishes/'
+
+class FishUpdate(UpdateView):
+  model = Fish
+  fields = ['size', 'description', 'age']
+
+class FishDelete(DeleteView):
+  model = Fish
+  success_url = '/fishes/'  
