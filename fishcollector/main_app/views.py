@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Fish
+from .forms import FeedingForm
 
 
 
@@ -14,9 +15,21 @@ def fishes_index(request):
   fishes = Fish.objects.all()
   return render(request, 'fishes/index.html', {'fishes': fishes})   
 
-def fishes_detail(request, fish_id):
-  fish = Fish.objects.get(id=fish_id)
-  return render(request, 'fishes/detail.html', { 'fish': fish})   
+def fishes_detail(request, pk):
+  fish = Fish.objects.get(id=pk)
+  feeding_form = FeedingForm()
+  return render(request, 'fishes/detail.html', {
+     'fish': fish,
+     'feeding_form': feeding_form
+     })
+
+def add_feeding(request, fish_id):
+  form = FeedingForm(request.POST)
+  if form.is_valid():
+    new_feeding = form.save(commit=False)
+    new_feeding.fish_id = pk
+    new_feeding.save()
+  return redirect('cats_detail', pk=pk)          
 
 class FishCreate(CreateView):
   model = Fish
