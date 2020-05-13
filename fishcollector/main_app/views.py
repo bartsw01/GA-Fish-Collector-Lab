@@ -18,12 +18,12 @@ def fishes_index(request):
 
 def fishes_detail(request, pk):
   fish = Fish.objects.get(id=pk)
-  # foods_fish_doesnt_have = Food.objects.exclude(id_in = fish.foods.all().values_list('id'))
+  foods_fish_doesnt_have = Food.objects.exclude(id_in = fish.foods.all().values_list('id'))
   feeding_form = FeedingForm()
   return render(request, 'fishes/detail.html', {
      'fish': fish,
      'feeding_form': feeding_form,
-    #  'foods': foods_fish_doesnt_have
+     'foods': foods_fish_doesnt_have
      })
 
 def add_feeding(request, fish_id):
