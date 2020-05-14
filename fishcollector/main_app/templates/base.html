@@ -20,9 +20,15 @@
         </ul>
         <ul class="right">
           <li><a href="{% url 'about' %}"">About</a></li>
-          <li><a href="{% url 'foods_create' %}">Add a Fish Food</a></li>
-          <li><a href="{% url 'fishes_create' %}">Add a Fish</a></li>
-          <li><a href="{% url 'index' %}">View All My Fishes</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'foods_create' %}">Add a Fish Food</a></li>
+            <li><a href="{% url 'fishes_create' %}">Add a Fish</a></li>
+            <li><a href="{% url 'index' %}">View All My Fishes</a></li>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+          {% else %}
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Log In</a></li>
+          {% endif %}  
         </ul>
       </div>
     </nav>
